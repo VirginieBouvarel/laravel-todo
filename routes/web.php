@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/a-propos', 'Aproposcontroller@index')->name('apropos');
 
+Route::resource('todos', 'TodoController');
