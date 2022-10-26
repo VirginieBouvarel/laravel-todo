@@ -14,9 +14,10 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $datas = Todo::all()->reject(function ($todo) {
-            return $todo->done == 0;
-        });
+        $datas = Todo::all();
+        // $datas = Todo::all()->reject(function ($todo) {
+        //     return $todo->done == 0;
+        // });
        
         return view('todos.index', compact('datas'));
     }
