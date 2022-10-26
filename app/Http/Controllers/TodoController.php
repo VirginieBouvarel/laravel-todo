@@ -14,7 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $datas = Todo::all();
+        $datas = Todo::paginate(10);
         // $datas = Todo::all()->reject(function ($todo) {
         //     return $todo->done == 0;
         // });

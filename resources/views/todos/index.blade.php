@@ -10,4 +10,6 @@
       </strong>
     </div>
   @endforeach
+
+  {{ $datas->links()}}
 @endsection
