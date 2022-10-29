@@ -28,7 +28,7 @@
   </div>
 
   @foreach ($datas as $data)
-    <div class="alert alert-primary" role="alert">
+    <div class="alert alert-{{ $data->done ? 'success' : 'warning'}}" role="alert">
       <strong>{{ $data->name }}
         @if($data->done)
         <span class="badge badge-success">Done</span>
