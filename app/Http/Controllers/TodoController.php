@@ -9,16 +9,30 @@ class TodoController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $datas = Todo::paginate(10);
-        // $datas = Todo::all()->reject(function ($todo) {
-        //     return $todo->done == 0;
-        // });
-       
+        return view('todos.index', compact('datas'));
+    }
+
+    /**
+     * Display a listing of done's todos.
+     */
+    public function done()
+    {
+        $datas = Todo::where('done', 1)-> paginate(10);
+        return view('todos.index', compact('datas'));
+    }
+    
+    /**
+     * Display a listing of undone's todos.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function undone()
+    {
+        $datas = Todo::where('done', 0)-> paginate(10);
         return view('todos.index', compact('datas'));
     }
 
