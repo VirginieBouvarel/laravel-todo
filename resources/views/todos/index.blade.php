@@ -29,11 +29,39 @@
 
   @foreach ($datas as $data)
     <div class="alert alert-{{ $data->done ? 'success' : 'warning'}}" role="alert">
-      <strong>{{ $data->name }}
-        @if($data->done)
-        <span class="badge badge-success">Done</span>
-        @endif
-      </strong>
+      <div class="row">
+        <div class="col-sm">
+          <strong>{{ $data->name }}
+            @if($data->done)
+            <span class="badge badge-success">Done</span>
+            @endif
+          </strong>
+        </div>
+        <div class="col-sm form-inline justify-content-end my-1">
+          {{-- Button done/undone --}}
+          @if($data->done == 0)
+          <form action="{{ route('todos.makedone', $data->id) }}" method="post">
+            @csrf
+            @method('PUT')
+            <button type="submit" class="btn btn-success mx-1" style="min-width:90px;">Done</button>
+          </form>
+          @else
+          <form action="{{ route('todos.makeundone', $data->id) }}" method="post">
+            @csrf
+            @method('PUT')
+            <button type="submit" class="btn btn-warning mx-1" style="min-width:90px;">undone</button>
+          </form>
+          @endif
+          {{-- Button edit --}}
+          <a class="btn btn-info mx-1" href="{{ route('todos.edit', $data->id) }}" role="button">Editer</a>
+          {{-- Button delete --}}
+          <form action="{{ route('todos.destroy', $data->id) }}" method="post">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger mx-1">Effacer</button>
+          </form>
+        </div>
+      </div>
     </div>
   @endforeach
 

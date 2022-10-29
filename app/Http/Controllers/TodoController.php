@@ -17,26 +17,6 @@ class TodoController extends Controller
     }
 
     /**
-     * Display a listing of done's todos.
-     */
-    public function done()
-    {
-        $datas = Todo::where('done', 1)-> paginate(10);
-        return view('todos.index', compact('datas'));
-    }
-    
-    /**
-     * Display a listing of undone's todos.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function undone()
-    {
-        $datas = Todo::where('done', 0)-> paginate(10);
-        return view('todos.index', compact('datas'));
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -77,34 +57,83 @@ class TodoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Todo $todo)
     {
-        //
+        return view('todos.edit', compact('todo'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Todo  $todo)
     {
-        //
+        if (!isset($request->done)) {
+            $request['done'] = 0;
+        }
+        $todo->update($request->all());
+        return redirect()->route('todos.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
+        return back();
+    }
+
+    /**
+     * Display a listing of done's todos.
+     */
+    public function done()
+    {
+        $datas = Todo::where('done', 1)-> paginate(10);
+        return view('todos.index', compact('datas'));
+    }
+    
+    /**
+     * Display a listing of undone's todos.
+     */
+    public function undone()
+    {
+        $datas = Todo::where('done', 0)-> paginate(10);
+        return view('todos.index', compact('datas'));
+    }
+
+    /**
+     * Change todo's status to done.
+     *
+     * @param Todo $todo
+     * @return void
+     */
+    public function makedone(Todo $todo)
+    {
+        $todo->done = 1;
+        $todo->update();
+        return back();
+    }
+    
+    /**
+     * Change todo status to done.
+     *
+     * @param Todo $todo
+     * @return void
+     */
+    public function makeundone(Todo $todo)
+    {
+        $todo->done = 0;
+        $todo->update();
+        return back();
     }
 }
