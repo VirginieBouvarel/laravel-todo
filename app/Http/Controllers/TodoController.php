@@ -3,17 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Todo;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
+    // store all users
+    public $users;
+
+    public function __construct()
+    {
+        $this->users = User::getAllUsers();
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $datas = Todo::paginate(10);
-        return view('todos.index', compact('datas'));
+        $userId = Auth::user()->id;
+        $datas = Todo::where(['affectedTo_id' => $userId])->orderBy('id', 'desc')->paginate(10);
+        $users = $this->users;
+        return view('todos.index', compact('datas', 'users'));
     }
 
     /**
@@ -35,6 +47,8 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $todo = new Todo();
+        $todo->creator_id = Auth::user()->id;
+        $todo->affectedTo_id = Auth::user()->id;
         $todo->name = $request->name;
         $todo->description = $request->description;
         $todo->done = 0;
@@ -99,7 +113,8 @@ class TodoController extends Controller
     public function done()
     {
         $datas = Todo::where('done', 1)-> paginate(10);
-        return view('todos.index', compact('datas'));
+        $users = $this->users;
+        return view('todos.index', compact('datas', 'users'));
     }
     
     /**
@@ -108,7 +123,8 @@ class TodoController extends Controller
     public function undone()
     {
         $datas = Todo::where('done', 0)-> paginate(10);
-        return view('todos.index', compact('datas'));
+        $users = $this->users;
+        return view('todos.index', compact('datas', 'users'));
     }
 
     /**
@@ -133,6 +149,21 @@ class TodoController extends Controller
     public function makeundone(Todo $todo)
     {
         $todo->done = 0;
+        $todo->update();
+        return back();
+    }
+
+    /**
+     * Assign a todo to an user.
+     *
+     * @param App\Todo $todo
+     * @param App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function affectedTo(Todo $todo, User $user)
+    {
+        $todo->affectedTo_id = $user->id;
+        $todo->affectedBy_id = Auth::user()->id;
         $todo->update();
         return back();
     }

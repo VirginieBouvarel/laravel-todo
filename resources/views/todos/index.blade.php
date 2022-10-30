@@ -38,6 +38,17 @@
           </strong>
         </div>
         <div class="col-sm form-inline justify-content-end my-1">
+          {{-- Button affected to --}}
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" ara-haspopup="true" aria-expanded="false">
+              Affecter à
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              @foreach ($users as $user)
+                <a class="dropdown-item" href="/todos/{{ $data->id }}/affectedTo/{{ $user->id }}">{{ $user->name }}</a>
+              @endforeach
+            </div>
+          </div>
           {{-- Button done/undone --}}
           @if($data->done == 0)
           <form action="{{ route('todos.makedone', $data->id) }}" method="post">
