@@ -31,11 +31,22 @@
     <div class="alert alert-{{ $data->done ? 'success' : 'warning'}}" role="alert">
       <div class="row">
         <div class="col-sm">
-          <strong>{{ $data->name }}
-            @if($data->done)
-            <span class="badge badge-success">Done</span>
-            @endif
-          </strong>
+          <p class="my-0">
+            <strong>
+              <span class="badge badge-dark">#{{ $data->id }}</span>
+            </strong>
+          </p>
+          <details>
+            <summary>
+              <strong>{{ $data->name }}
+                @if($data->done)
+                <span class="badge badge-success">Done</span>
+                @endif
+              </strong>
+            </summary>
+            <p>{{ $data->description }}</p>
+          </details>
+
         </div>
         <div class="col-sm form-inline justify-content-end my-1">
           {{-- Button affected to --}}
