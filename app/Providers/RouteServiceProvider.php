@@ -24,10 +24,18 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
 
     /**
+     * The path to the "todos" page.
+     *
+     * @var string
+     */
+    public const TODOS = '/todos';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
+    
     public function boot()
     {
         //
