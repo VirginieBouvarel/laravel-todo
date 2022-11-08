@@ -9,4 +9,25 @@ class Todo extends Model
     protected $fillable = [
         'name', 'description', 'done'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'creator_id');
+    }
+
+    /**
+     * Get user affected to this todo
+     */
+    public function todoAffectedTo()
+    {
+        return $this->belongsTo('App\User', 'affectedTo_id');
+    }
+    
+    /**
+     * Get user who has affected this todo
+     */
+    public function todoAffectedBy()
+    {
+        return $this->belongsTo('App\User', 'affectedBy_id');
+    }
 }
