@@ -76,7 +76,14 @@
         <div class="col-sm form-inline justify-content-end my-1">
           {{-- Button affected to --}}
           <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" ara-haspopup="true" aria-expanded="false">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              ara-haspopup="true"
+              aria-expanded="false"
+            >
               Affecter à
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
