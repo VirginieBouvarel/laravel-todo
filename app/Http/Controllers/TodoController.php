@@ -54,6 +54,8 @@ class TodoController extends Controller
         $todo->done = 0;
         $todo->save();
 
+        notify()->success("La todo <span class='badge badge-dark'>#$todo->id</span> vient dêtre créée.");
+
         return redirect()->route('todos.index');
     }
 
@@ -92,6 +94,7 @@ class TodoController extends Controller
             $request['done'] = 0;
         }
         $todo->update($request->all());
+        notify()->success("La todo <span class='badge badge-dark'>#$todo->id</span> a bien été mise à jour.");
         return redirect()->route('todos.index');
     }
 
@@ -104,6 +107,7 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         $todo->delete();
+        notify()->error("La todo <span class='badge badge-dark'>#$todo->id</span> a bien été supprimée.");
         return back();
     }
 
@@ -137,6 +141,7 @@ class TodoController extends Controller
     {
         $todo->done = 1;
         $todo->update();
+        notify()->success("La todo <span class='badge badge-dark'>#$todo->id</span> a bien été terminée.");
         return back();
     }
     
@@ -150,6 +155,7 @@ class TodoController extends Controller
     {
         $todo->done = 0;
         $todo->update();
+        notify()->success("La todo <span class='badge badge-dark'>#$todo->id</span> est à nouveau ouverte.");
         return back();
     }
 

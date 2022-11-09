@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @notify_css
 </head>
 <body>
     <div id="app">
@@ -82,4 +83,6 @@
         </main>
     </div>
 </body>
+@notify_js
+@notify_render
 </html>
