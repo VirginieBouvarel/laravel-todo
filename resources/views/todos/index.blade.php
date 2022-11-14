@@ -37,7 +37,7 @@
             </strong>
             <small>
               Crée {{ $data->created_at->from() }} par
-              {{ Auth::user()->id == $data->user->id ? 'moi' : $data->user->name }}
+              {{-- {{ Auth::user()->id == $data->user->id ? 'moi' : $data->user->name }} --}}
 
               @if ($data->todoAffectedTo && $data->todoAffectedTo->id == Auth::user()->id)
               affectée à moi
