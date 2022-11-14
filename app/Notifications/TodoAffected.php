@@ -30,7 +30,7 @@ class TodoAffected extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -42,9 +42,11 @@ class TodoAffected extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->from('noreply@laravel-todo.fr', 'Laravel Expéditeur')
+            ->subject('Tu as une nouvelle todo à fiir !')
+            ->line("La todo (#" . $this->todo->id . ") '" . $this->todo->name . "' vient de t'être affectée par " . $this->todo->todoAffectedBy->name . ".")
+            ->action('Voir toutes mes todos', url('/todos'))
+            ->line("Merci d'utiliser notre application");
     }
 
     /**
