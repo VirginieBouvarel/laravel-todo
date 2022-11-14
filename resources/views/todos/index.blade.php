@@ -107,13 +107,25 @@
           </form>
           @endif
           {{-- Button edit --}}
-          <a class="btn btn-info mx-1" href="{{ route('todos.edit', $data->id) }}" role="button">Editer</a>
+          @can('edit', $data)
+            <a class="btn btn-info mx-1" href="{{ route('todos.edit', $data->id) }}" role="button">Editer</a>
+          @elsecannot('edit', $data)
+            <a class="btn btn-info mx-1 disabled" href="{{ route('todos.edit', $data->id) }}" role="button">Editer</a>
+          @endcan
           {{-- Button delete --}}
-          <form action="{{ route('todos.destroy', $data->id) }}" method="post">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger mx-1">Effacer</button>
-          </form>
+          @can('delete', $data)
+            <form action="{{ route('todos.destroy', $data->id) }}" method="post">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger mx-1">Effacer</button>
+            </form>
+          @elsecannot('delete', $data)
+            <form action="{{ route('todos.destroy', $data->id) }}" method="post">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger mx-1 disabled">Effacer</button>
+            </form>
+          @endcan
         </div>
       </div>
     </div>
