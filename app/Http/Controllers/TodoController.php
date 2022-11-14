@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\TodoAffected;
 use App\Todo;
 use App\User;
 use Illuminate\Http\Request;
@@ -171,6 +172,9 @@ class TodoController extends Controller
         $todo->affectedTo_id = $user->id;
         $todo->affectedBy_id = Auth::user()->id;
         $todo->update();
+
+        $user->notify(new TodoAffected($todo));
+
         return back();
     }
 }
